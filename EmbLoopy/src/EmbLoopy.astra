@@ -1,0 +1,22 @@
+agent EmbLoopy {
+    module Console console;
+    module System system;
+    
+    initial !init();
+
+    rule +!init() {
+        console.println("Started program");
+        !print(1, 5);
+        console.println("Finished Loop");
+        system.exit();
+    }
+    
+    rule +!print(int X, int N) : X < N {
+        console.println(X);
+        !print(X-1,5);
+    }
+    
+    rule +!print(int X, int N) : X == N {
+        console.println(X);
+    }
+}
