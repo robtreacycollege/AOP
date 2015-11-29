@@ -1,0 +1,20 @@
+agent Eachy {
+    module Console console;
+    module System system;
+    
+    initial !init();
+    initial rate(1.21);
+    initial balance("Rem", 1000.0);
+    initial balance("Bob", 500.0);
+    
+    rule +!init() : rate(double rate) {
+        console.println("before loop");
+        foreach (balance(string name, double amt)) {
+            -balance(name, amt);
+            +balance(name, amt*rate);
+            console.println(name + " change from: " + amt + " to: " + (amt*rate));
+        }
+        console.println("after loop");
+        system.exit();
+    }
+}
